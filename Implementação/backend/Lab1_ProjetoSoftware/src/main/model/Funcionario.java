@@ -19,8 +19,12 @@ public abstract class Funcionario implements Serializable {
     private String endereco;
     private BigInteger salario;
 
+
+    public Funcionario() {
+    }
+
     public Funcionario(Long id, Long matricula, String nome, String nomeFamiliar, String documentoLegal,
-            String departamento, String anoIngresso, String anoDesligamento, String endereco, BigInteger salario) {
+                       String departamento, String anoIngresso, String anoDesligamento, String endereco, BigInteger salario) {
         this.id = id;
         this.matricula = matricula;
         this.nome = nome;
