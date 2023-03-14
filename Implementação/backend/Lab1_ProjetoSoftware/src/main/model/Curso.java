@@ -1,6 +1,7 @@
 package main.model;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Curso implements Serializable {
@@ -43,5 +44,16 @@ public class Curso implements Serializable {
 
     public List<Curriculo> getCurriculos(){
         return this.curriculos;
+    }
+
+    @Override
+    public Curso clone(){
+        Curso retorno = new Curso();
+
+        retorno.id = this.id;
+        retorno.disciplinasDoCurso = new LinkedList<Disciplina>(this.disciplinasDoCurso);
+        retorno.curriculos = new LinkedList<Curriculo>(this.curriculos);
+
+        return retorno;
     }
 }

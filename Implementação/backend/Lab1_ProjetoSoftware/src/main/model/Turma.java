@@ -83,7 +83,7 @@ public class Turma implements Serializable {
         retorno.sala = this.sala.clone();
         retorno.curso = this.curso.clone();
         retorno.professor = this.professor.clone();
-        retorno.disciplina = this.disciplina.clone();
+        //retorno.disciplina = this.disciplina.clone();
         retorno.horario = this.horario;
 
         return retorno;
