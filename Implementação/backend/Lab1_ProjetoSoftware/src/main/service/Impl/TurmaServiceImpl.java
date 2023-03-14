@@ -1,6 +1,10 @@
 package main.service.Impl;
 
-import main.model.Turma;
+import main.model.*;
+import main.model.Requests.TurmaRequest;
+import main.repository.Persistencia;
+import main.repository.SalvarNoArquivo;
+import main.service.CursoService;
 import main.service.TurmaService;
 
 import java.nio.file.Files;
@@ -11,29 +15,38 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TurmaServiceImpl implements TurmaService {
+
+    private Persistencia persistir = new SalvarNoArquivo();
+    private CursoService cursoService = new CursoServiceImpl();
+    private String systemPathTurmas = "c:\\SistemaMatriculas\\Turmas";
+
     @Override
-    public Turma criarTurma(Turma turma) {
+    public Turma criarTurma(TurmaRequest turma) throws Exception {
         Date dataAtual = new Date();
 
-        Turma turmaAtual = findTurmaByDocumentoLegal(turma.getDocumentoLegal());
+        Turma turmaAtual = findTurmaByDisciplinaAndProfessorAndHorario(turma.getDisciplina(),turma.getProfessor(),turma.getHorario());
+
         if ( turmaAtual == null){
 
             Long id= geradorDeId();
-            turmaAtual = new Turma(
-            id,
-            id,
-            turma.getAlunos(),
-            turma.getCurso(),
-            turma.getProfessor(),
 
-            ""+dataAtual.getYear(),
-            null,
-            turma.getSala(),
+            turmaAtual = new Turma(
+                id,
+                new LinkedList<Aluno>(),
+                new Sala(),
+                turma.getCurso(),
+                turma.getProfessor(),
+                turma.getDisciplina(),
+                turma.getHorario()
             );
+
+
             escreverTurmaNoArquivo(turmaAtual,"Turmas.txt");
         }
         return turmaAtual;
     }
+
+
 
     private Long geradorDeId() throws Exception {
 
@@ -48,7 +61,7 @@ public class TurmaServiceImpl implements TurmaService {
     }
 
     @Override
-    public Turma editarTurma(Long id, Turma turmaModificada) {
+    public Turma editarTurma(Long id, Turma turmaModificada) throws Exception {
         Turma turma = findTurmaById(id);
         if ( turma!= null){
             deletarTurma(id);
@@ -61,25 +74,62 @@ public class TurmaServiceImpl implements TurmaService {
     }
 
     @Override
-    public Turma deletarTurma(Long id) {
+    public Turma deletarTurma(Long id) throws Exception {
         Turma turma = findTurmaById(id);
         if ( turma!= null){
 
             excluirTurmaNoArquivo(turma,"Turmas.txt");
         }else{
-            System.out.println("TURMA NÃO ENCONTRADO");
+            System.out.println("TURMA NÃO ENCONTRADA");
         }
         return turma;
     }
+
+
+    private LinkedList<Turma> carregarArquivoTurmaParaMemoria(String nomeArquivoTurma) throws Exception {
+
+        String path = systemPathTurmas+"\\"+nomeArquivoTurma;
+        return  (LinkedList<Turma>) persistir.deserializar(path);
+    }
+
+    private boolean escreverTurmaNoArquivo(Turma turma, String nomeArquivoTurma) throws Exception {
+
+        String path = systemPathTurmas+"\\"+nomeArquivoTurma;
+        LinkedList<Turma> turmas = (LinkedList<Turma>) persistir.deserializar(path);
+        turmas.add(turma.clone());
+        return persistir.serializar(path,turmas);
+
+    }
+
+    private boolean excluirTurmaNoArquivo(Turma turma, String nomeArquivoTurmas) throws Exception {
+
+        String path = systemPathTurmas+"\\"+nomeArquivoTurmas;
+        LinkedList<Turma> turmas = (LinkedList<Turma>) persistir.deserializar(path);
+        turmas.remove(turma);
+        return persistir.serializar(path,turmas);
+
+    }
+
+
+
+
+
 
     @Override
     public Turma getTurma(Long idDisciplina, String numeroDisciplina) {
         return null;
 
     }
-
+    private Turma findTurmaByDisciplinaAndProfessorAndHorario(Disciplina disciplina, Professor professor, String horario) {
+        return null;
+    }
     @Override
     public boolean matricularAluno(Long id, Turma turma) {
         return false;
+    }
+
+    @Override
+    public Turma findTurmaById(Long idTurma) throws Exception {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package main.model;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Turma implements Serializable {
@@ -13,16 +14,22 @@ public class Turma implements Serializable {
     private Curso curso;
     private Professor professor;
 
+    private Disciplina disciplina;
+
+    private String horario;
+
     public Turma(){
 
     }
 
-    public Turma(Long id, List<Aluno> alunos, Sala sala, Curso curso, Professor professor){
+    public Turma(Long id, List<Aluno> alunos, Sala sala, Curso curso, Professor professor, Disciplina disciplina, String horario){
         this.id = id;
         this.alunos = alunos;
         this.sala = sala;
         this.curso = curso;
         this.professor = professor;
+        this.disciplina = disciplina;
+        this.horario = horario;
     }
 
     //Setter
@@ -65,5 +72,20 @@ public class Turma implements Serializable {
 
     public Professor getProfessor(){
         return this.professor;
+    }
+
+    @Override
+    public Turma clone(){
+        Turma retorno = new Turma();
+
+        retorno.id = this.id;
+        new LinkedList<Aluno>(this.alunos);
+        retorno.sala = this.sala.clone();
+        retorno.curso = this.curso.clone();
+        retorno.professor = this.professor.clone();
+        retorno.disciplina = this.disciplina.clone();
+        retorno.horario = this.horario;
+
+        return retorno;
     }
 }
