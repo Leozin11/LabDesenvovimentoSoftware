@@ -1,7 +1,6 @@
 package main.model;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 
 public class Sala implements Serializable {
 
@@ -9,26 +8,33 @@ public class Sala implements Serializable {
 
 
     private Long id;
-    private Integer numero;
+    private int numero;
     private String predio;
     private String turma;
 
     public Sala() {
     }
 
-    public Sala(Long id, Integer numero, String predio, String turma) {
+    public Sala(Long id, int numero, String predio, String turma) {
         this.id = id;
         this.numero = numero;
         this.predio = predio;
         this.turma = turma;
     }
+    
+    public void setId(Long Id){
+        this.id = Id;
+    }
 
+    public Long getId(){
+        return this.id;
+    }
 
-    public Integer getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 

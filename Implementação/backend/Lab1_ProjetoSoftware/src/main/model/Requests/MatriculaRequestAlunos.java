@@ -2,6 +2,7 @@ package main.model.Requests;
 
 import main.model.Curriculo;
 
+import java.util.Objects;
 import java.util.Date;
 
 public class MatriculaRequestAlunos {
@@ -14,6 +15,20 @@ public class MatriculaRequestAlunos {
     private String curso;
     private Date dataAtual;
     private String endereco;
+
+    public MatriculaRequestAlunos(){
+
+    }
+
+    public MatriculaRequestAlunos(String nome, String nomeFamiliar, String documentoLegal, String curriculo, String curso, Date dataAtual, String endereco){
+        this.nome = nome;
+        this.nomeFamiliar = nomeFamiliar;
+        this.documentoLegal = documentoLegal;
+        this.curriculo = curriculo;
+        this.curso = curso;
+        this.dataAtual = dataAtual;
+        this.endereco = endereco;
+    }
 
     public String getNome() {
         return nome;
@@ -69,5 +84,25 @@ public class MatriculaRequestAlunos {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNome(), getNomeFamiliar(), getDocumentoLegal(), getCurriculo(),
+        getCurso(), getDataAtual(), getEndereco());
+    }
+
+    public MatriculaRequestAlunos clone(){
+        MatriculaRequestAlunos MatriculaAluno = new MatriculaRequestAlunos();
+
+        MatriculaAluno.nome = getNome();
+        MatriculaAluno.nomeFamiliar = getNomeFamiliar();
+        MatriculaAluno.documentoLegal = getDocumentoLegal();
+        MatriculaAluno.curriculo = getCurriculo();
+        MatriculaAluno.curso = getCurso();
+        MatriculaAluno.dataAtual = getDataAtual();
+        MatriculaAluno.endereco = getEndereco();
+
+        return MatriculaAluno;
     }
 }
