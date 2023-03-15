@@ -111,20 +111,17 @@ public class TurmaServiceImpl implements TurmaService {
 
     }
 
-
-
-
-
-
     @Override
-    public Turma getTurma(Long idDisciplina, String numeroDisciplina) throws Exception {
+    public Turma getTurma(Long idDisciplina, String turno) throws Exception {
         String path = systemPathTurmas+"\\"+"Turmas.txt";
         LinkedList<Turma> turmas = (LinkedList<Turma>) persistir.deserializar(path);
 
         for (Turma turmaAtual:
                 turmas) {
 
-            if(turmaAtual.getDisciplina().getId() == idDisciplina){
+            String turnoAtual = turmaAtual.getHorario().toUpperCase();
+
+            if(turmaAtual.getDisciplina().getId() == idDisciplina && turnoAtual.equals(turno.toUpperCase())){
                 return turmaAtual.clone();
             }
 
@@ -132,8 +129,27 @@ public class TurmaServiceImpl implements TurmaService {
         return null;
 
     }
-    private Turma findTurmaByDisciplinaAndProfessorAndHorario(Disciplina disciplina, Professor professor, String horario) {
+    private Turma findTurmaByDisciplinaAndProfessorAndHorario(Disciplina disciplina, Professor professor, String horario) throws Exception {
+
+        String path = systemPathTurmas+"\\"+"Turmas.txt";
+        LinkedList<Turma> turmas = (LinkedList<Turma>) persistir.deserializar(path);
+
+        for (Turma turmaAtual:
+                turmas) {
+
+            String turnoAtual = turmaAtual.getHorario().toUpperCase();
+            String professorAtual = turmaAtual.getProfessor().getNome().toUpperCase();
+
+            if(     turmaAtual.getDisciplina().getId() == disciplina.getId() &&
+                    turnoAtual.equals(horario.toUpperCase()) &&
+                    professorAtual.equals(professor.getNome().toUpperCase())) {
+
+                        return turmaAtual.clone();
+            }
+
+        }
         return null;
+
     }
     @Override
     public Turma matricularAluno(Long idAluno, Disciplina disciplinaDesejada, String turno) {
@@ -145,6 +161,17 @@ public class TurmaServiceImpl implements TurmaService {
 
     @Override
     public Turma findTurmaById(Long idTurma) throws Exception {
+        String path = systemPathTurmas+"\\"+"Turmas.txt";
+        LinkedList<Turma> turmas = (LinkedList<Turma>) persistir.deserializar(path);
+
+        for (Turma turmaAtual:
+                turmas) {
+
+            if(turmaAtual.getId() == idTurma){
+                return turmaAtual.clone();
+            }
+
+        }
         return null;
     }
 }

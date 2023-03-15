@@ -13,7 +13,7 @@ public interface TurmaService {
     //Turma turma - throws Exception
     Turma deletarTurma(Long id) throws Exception;
 
-    Turma getTurma(Long idDisciplina, String numeroDisciplina) throws Exception;
+    Turma getTurma(Long idDisciplina, String numeroTurno) throws Exception;
 
     Turma matricularAluno(Long idAluno, Disciplina disciplinaDesejada, String turno);
     //criei
