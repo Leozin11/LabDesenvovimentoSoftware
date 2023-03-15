@@ -120,22 +120,97 @@ public class GerenciamentoPrincipal {
 
     }
 
-    private static void menuPrincipal() {
+   private static void menuPrincipal() {
 
         System.out.println("Seja Bem vindo a nossa escola !!!");
-		System.out.println("\n\tMenu:");
+		System.out.println("\n\tMenu Principal:");
 		System.out.println("1. Logar na plataforma");
 		System.out.println("2. Realizar Matricula");
 
 		System.out.println("3. Finalizar o menu principal");
 		System.out.println("Digite a opcao desejada:");
 	}
-    private static void menuMatricula() {
-        System.out.println("\n\tMenu:");
+
+
+
+private static void menuMatricula() {
+        System.out.println("\n\tMenu Matrícula:");
 		System.out.println("1. Realizar Matricula de Aluno");
 		System.out.println("2. Realizar Matricula de Professor");
 
 		System.out.println("3. Finalizar o menu de matrícula");
+		System.out.println("Digite a opcao desejada:");
+    }
+
+private static void menuLogin() {
+        System.out.println("\n\tMenu Login:");
+		System.out.println("1. Realizar Login de Aluno");
+		System.out.println("2. Realizar Login de Professor");
+                System.out.println("3. Realizar Login de Secretária");
+
+		System.out.println("4. Finalizar o menu de login");
+		System.out.println("Digite a opcao desejada:");
+    }
+
+
+private static void menuAluno() {
+        System.out.println("\n\tMenu Aluno:");
+		System.out.println("1. Visualizar turma");
+
+		System.out.println("2. Finalizar o menu de aluno");
+		System.out.println("Digite a opcao desejada:");
+    }
+private static void menuProfessor() {
+        System.out.println("\n\tMenu Professor:");
+		System.out.println("1. Visualizar turma");
+
+		System.out.println("2. Finalizar o menu de professor");
+		System.out.println("Digite a opcao desejada:");
+    }
+
+private static void menuSecretaria() {
+        System.out.println("\n\tMenu Secretaria:");
+		System.out.println("1. Visualizar turma");
+                System.out.println("2. Gerenciar curso");
+                System.out.println("3. Gerenciar disciplina");
+                System.out.println("4. Gerenciar currículo");
+
+		System.out.println("5. Finalizar o menu de secretaria");
+		System.out.println("Digite a opcao desejada:");
+    }
+
+
+
+private static void menuCurso() {
+        System.out.println("\n\tMenu Curso:");
+		System.out.println("1. Criar");
+		System.out.println("2. Editar");
+                System.out.println("3. Visualizar");
+                System.out.println("4. Deletar");
+
+		System.out.println("5. Finalizar o menu de curso");
+		System.out.println("Digite a opcao desejada:");
+    }
+
+private static void menuDiploma() {
+        System.out.println("\n\tMenu Curso:");
+		System.out.println("1. Criar");
+		System.out.println("2. Editar");
+                System.out.println("3. Visualizar");
+                System.out.println("4. Deletar");
+
+		System.out.println("5. Finalizar o menu de diploma");
+		System.out.println("Digite a opcao desejada:");
+    }
+
+private static void menuCurrículo() {
+        System.out.println("\n\tMenu Currículo:");
+		System.out.println("1. Criar");
+		System.out.println("2. Editar");
+                System.out.println("3. Visualizar");
+                System.out.println("4. Deletar");
+
+		System.out.println("5. Finalizar o menu de currículo");
 		System.out.println("Digite a opcao desejada:");
     }
 
