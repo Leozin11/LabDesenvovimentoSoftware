@@ -24,6 +24,9 @@ public class Curriculo implements Serializable {
     public Curriculo() {
     }
 
+    public Curriculo(String curriculo) {
+    }
+
     public Long getId() {
         return id;
     }

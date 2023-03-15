@@ -1,6 +1,9 @@
 package main.service.Impl;
 
+import main.model.Curriculo;
+import main.model.Curso;
 import main.model.Disciplina;
+import main.model.Requests.DisciplinaRequest;
 import main.service.DisciplinaService;
 import main.repository.Persistencia;
 import main.repository.SalvarNoArquivo;
@@ -13,7 +16,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
     private String systemPathDisciplinas = "c:\\SistemaMatriculas\\Disciplinas";
 
     @Override
-    public Disciplina criarDisciplina(Disciplina disciplina) throws Exception{
+    public Disciplina criarDisciplina(DisciplinaRequest disciplina) throws Exception{
 
         Disciplina disciplinaAtual = findDisciplinaByName(disciplina.getNome());
         if(disciplinaAtual == null){
@@ -24,10 +27,8 @@ public class DisciplinaServiceImpl implements DisciplinaService {
                                             disciplina.getNumero(), 
                                             disciplina.getPeriodo(), 
                                             disciplina.getCargaHoraria(), 
-                                            disciplina.getCurriculo(), 
-                                            disciplina.getHorario(), 
-                                            disciplina.getTurno(), 
-                                            disciplina.getDuração(), 
+                                            new Curriculo(disciplina.getCurriculo()),
+                                            new Curso(disciplina.getCurso()),
                                             disciplina.getPeso(), 
                                             disciplina.isObrigatoria()
                                             );
@@ -98,7 +99,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
         for (Disciplina disciplinaAtual: disciplinas) {
 
-            if(disciplinaAtual.getNome() == nome){
+            if(disciplinaAtual.getNome().equals(nome)){
                 return disciplinaAtual.clone();
             }
 

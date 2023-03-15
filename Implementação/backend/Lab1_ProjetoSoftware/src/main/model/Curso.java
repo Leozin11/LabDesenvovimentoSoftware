@@ -22,6 +22,9 @@ public class Curso implements Serializable {
         this.curriculos = curriculos;
     }
 
+    public Curso(String curso) {
+    }
+
     public void setId(Long Id){
         this.id = Id;
     }

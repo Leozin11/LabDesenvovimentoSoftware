@@ -1,9 +1,11 @@
 package main;
 
 import main.controller.AlunoController;
+import main.controller.FuncionarioController;
 import main.controller.MatriculaController;
 import main.model.Aluno;
 import main.model.Disciplina;
+import main.model.Requests.DisciplinaRequest;
 import main.model.Requests.MatriculaRequestAlunos;
 import main.service.AlunoService;
 import main.service.Impl.AlunoServiceImpl;
@@ -20,6 +22,7 @@ public class GerenciamentoPrincipal {
 
     AlunoService alunoService = new AlunoServiceImpl();
     AlunoController alunoController = new AlunoController();
+    FuncionarioController funcionarioController = new FuncionarioController();
 
     MatriculaController matriculaController = new MatriculaController();
     public void selecionarDisciplinas(Long idAluno) throws Exception{
@@ -120,29 +123,75 @@ public class GerenciamentoPrincipal {
 
     }
 
+    private void cadastrarDisciplinas() throws Exception {
+
+        DisciplinaRequest disciplinaDesejada = new DisciplinaRequest();
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
+        disciplinaDesejada.setId(0L);
+
+        System.out.print("Digite o nome da disciplina: ");
+        disciplinaDesejada.setNome(input.readLine());
+        System.out.println("");
+
+        System.out.print("Digite o numero alternativo da disciplina: ");
+        disciplinaDesejada.setNumero(input.readLine());
+        System.out.println("");
+
+        System.out.print("Digite o periodo regular da disciplina: ");
+        disciplinaDesejada.setPeriodo(input.readLine());
+        System.out.println("");
+
+        System.out.print("Digite a carga horaria da disciplina: ");
+        disciplinaDesejada.setCargaHoraria(input.readLine());
+        System.out.println("");
+
+        System.out.print("Digite o numero do curriculo da disciplina: ");
+        disciplinaDesejada.setCurriculo(input.readLine());
+        System.out.println("");
+
+
+        System.out.print("Digite o numero do curriculo da disciplina: ");
+        disciplinaDesejada.setPeso(Integer.parseInt(input.readLine()));
+        System.out.println("");
+
+
+        System.out.print("Discipline é obrigatoria? (Digite sim ou não)" );
+        disciplinaDesejada.setObrigatoria (input.readLine().equals("sim") ? true :false);
+        System.out.println("");
+
+        Disciplina novaDisciplina =  funcionarioController.criarDisciplina(disciplinaDesejada);
+
+        if (novaDisciplina != null){
+            System.out.println("Disciplina Criada com sucesso: "+novaDisciplina.getId());
+        }else{
+            System.out.println("Falha criar disciplina");
+        }
+
+    }
+
    private static void menuPrincipal() {
 
         System.out.println("Seja Bem vindo a nossa escola !!!");
 		System.out.println("\n\tMenu Principal:");
 		System.out.println("1. Logar na plataforma");
 		System.out.println("2. Realizar Matricula");
+        System.out.println("3. Cadastrar Disciplina");
 
-		System.out.println("3. Finalizar o menu principal");
+		System.out.println("30. Finalizar o menu principal");
 		System.out.println("Digite a opcao desejada:");
 	}
 
-
-
-private static void menuMatricula() {
+   private static void menuMatricula() {
         System.out.println("\n\tMenu Matrícula:");
 		System.out.println("1. Realizar Matricula de Aluno");
 		System.out.println("2. Realizar Matricula de Professor");
 
 		System.out.println("3. Finalizar o menu de matrícula");
 		System.out.println("Digite a opcao desejada:");
-    }
+   }
 
-private static void menuLogin() {
+   private static void menuLogin() {
         System.out.println("\n\tMenu Login:");
 		System.out.println("1. Realizar Login de Aluno");
 		System.out.println("2. Realizar Login de Professor");
@@ -150,25 +199,25 @@ private static void menuLogin() {
 
 		System.out.println("4. Finalizar o menu de login");
 		System.out.println("Digite a opcao desejada:");
-    }
+   }
 
 
-private static void menuAluno() {
+   private static void menuAluno() {
         System.out.println("\n\tMenu Aluno:");
 		System.out.println("1. Visualizar turma");
 
 		System.out.println("2. Finalizar o menu de aluno");
 		System.out.println("Digite a opcao desejada:");
     }
-private static void menuProfessor() {
+   private static void menuProfessor() {
         System.out.println("\n\tMenu Professor:");
 		System.out.println("1. Visualizar turma");
 
 		System.out.println("2. Finalizar o menu de professor");
 		System.out.println("Digite a opcao desejada:");
-    }
+   }
 
-private static void menuSecretaria() {
+    private static void menuSecretaria() {
         System.out.println("\n\tMenu Secretaria:");
 		System.out.println("1. Visualizar turma");
                 System.out.println("2. Gerenciar curso");
@@ -181,7 +230,7 @@ private static void menuSecretaria() {
 
 
 
-private static void menuCurso() {
+    private static void menuCurso() {
         System.out.println("\n\tMenu Curso:");
 		System.out.println("1. Criar");
 		System.out.println("2. Editar");
@@ -192,7 +241,7 @@ private static void menuCurso() {
 		System.out.println("Digite a opcao desejada:");
     }
 
-private static void menuDiploma() {
+    private static void menuDiploma() {
         System.out.println("\n\tMenu Curso:");
 		System.out.println("1. Criar");
 		System.out.println("2. Editar");
@@ -203,7 +252,7 @@ private static void menuDiploma() {
 		System.out.println("Digite a opcao desejada:");
     }
 
-private static void menuCurrículo() {
+    private static void menuCurrículo() {
         System.out.println("\n\tMenu Currículo:");
 		System.out.println("1. Criar");
 		System.out.println("2. Editar");
@@ -256,9 +305,10 @@ private static void menuCurrículo() {
                     }
                            
 
-                    
-
                     case 3:
+                        gerenciamentoPrincipal.cadastrarDisciplinas();
+
+                    case 30:
 						isAtivo = false;
 						System.out.println("Programa finalizado!");
 						break;
@@ -272,6 +322,8 @@ private static void menuCurrículo() {
             }
         }
     }
+
+
 }
         
         

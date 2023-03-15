@@ -1,30 +1,28 @@
-package main.model;
+package main.model.Requests;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-public class Disciplina implements Serializable {
+public class DisciplinaRequest implements Serializable {
 
-    private static final long serialVersionUID = 70L;
+    private static final long serialVersionUID = 500L;
 
     private Long id;
     private String nome;
     private String numero;
     private String periodo;
     private String cargaHoraria;
-    private Curriculo curriculo;
-
-    private Curso curso;
-
+    private String curriculo;
+    private String curso;
     private Integer peso;
     private boolean obrigatoria;
 
-    public Disciplina() {
+
+    public DisciplinaRequest() {
     }
 
-    public Disciplina(Long id, String nome, String numero, String periodo,
-                      String cargaHoraria, Curriculo curriculo, Curso curso,
-                      Integer peso, boolean obrigatoria) {
+    public DisciplinaRequest(Long id, String nome, String numero, String periodo,
+                             String cargaHoraria, String curriculo, String curso,
+                             Integer peso, boolean obrigatoria) {
         this.id = id;
         this.nome = nome;
         this.numero = numero;
@@ -76,28 +74,20 @@ public class Disciplina implements Serializable {
         this.cargaHoraria = cargaHoraria;
     }
 
-    public Curriculo getCurriculo() {
+    public String getCurriculo() {
         return curriculo;
     }
 
-    public void setCurriculo(Curriculo curriculo) {
+    public void setCurriculo(String curriculo) {
         this.curriculo = curriculo;
     }
 
-    public Curso getCurso() {
+    public String getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(String curso) {
         this.curso = curso;
-    }
-
-    public boolean isObrigatoria() {
-        return obrigatoria;
-    }
-
-    public void setObrigatoria(boolean obrigatoria) {
-        this.obrigatoria = obrigatoria;
     }
 
 
@@ -109,23 +99,11 @@ public class Disciplina implements Serializable {
         this.peso = peso;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getNome(), getCargaHoraria(), getCurriculo(), getPeso(), isObrigatoria());
+    public boolean isObrigatoria() {
+        return obrigatoria;
     }
 
-    @Override
-    public Disciplina clone(){
-        Disciplina disc = new Disciplina();
-
-        disc.id = getId();
-        disc.nome = getNome();
-        disc.cargaHoraria = getCargaHoraria();
-        disc.curriculo = getCurriculo().clone();
-        disc.peso = getPeso();
-        disc.obrigatoria = isObrigatoria();
-        disc.curso = getCurso().clone();
-
-        return disc;
+    public void setObrigatoria(boolean obrigatoria) {
+        this.obrigatoria = obrigatoria;
     }
 }
