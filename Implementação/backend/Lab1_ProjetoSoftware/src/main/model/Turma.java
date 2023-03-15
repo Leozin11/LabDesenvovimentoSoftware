@@ -74,6 +74,26 @@ public class Turma implements Serializable {
         return this.professor;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
     @Override
     public Turma clone(){
         Turma retorno = new Turma();
@@ -83,8 +103,9 @@ public class Turma implements Serializable {
         retorno.sala = this.sala.clone();
         retorno.curso = this.curso.clone();
         retorno.professor = this.professor.clone();
-        //retorno.disciplina = this.disciplina.clone();
+        retorno.disciplina = this.disciplina.clone();
         retorno.horario = this.horario;
+
 
         return retorno;
     }

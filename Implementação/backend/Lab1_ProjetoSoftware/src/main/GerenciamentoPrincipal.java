@@ -7,6 +7,8 @@ import main.model.Aluno;
 import main.model.Disciplina;
 import main.model.Requests.DisciplinaRequest;
 import main.model.Requests.MatriculaRequestAlunos;
+import main.model.Requests.MatriculaRequestDisciplinas;
+import main.model.Turma;
 import main.service.AlunoService;
 import main.service.Impl.AlunoServiceImpl;
 
@@ -29,27 +31,36 @@ public class GerenciamentoPrincipal {
 
         Aluno aluno = alunoService.findAlunoById(idAluno);
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        LinkedList<Disciplina> disciplinasDisponiveis = (LinkedList<Disciplina>) aluno.getCurriculo().getDisciplinasDoCurriculo();
+        LinkedList<Disciplina> disciplinasPendentes = (LinkedList<Disciplina>) aluno.getDisciplinasPendentes();
         LinkedList<Integer> idsDesejados = new LinkedList<Integer>();
+        LinkedList<String> turnosDesejados = new LinkedList<String>();
 
+
+        System.out.println(" Disciplinas restantes para serem Cursadas: ");
+        System.out.println();
         for (Disciplina disciplinaAtual:
-             disciplinasDisponiveis) {
-           System.out.println("Disciplna: "+disciplinaAtual.getNome()+" Código: "+disciplinaAtual.getId());
+             disciplinasPendentes) {
+           System.out.println("Disciplna: "+disciplinaAtual.getNome()+" Código: "+disciplinaAtual.getId() );
 
         }
 
         String entrada="";
         do{
-            System.out.println("digite salvar a qualquer momento para finalizar as escolhas");
-            System.out.println("digite o id das disciplinas que deseja se matricular: ");
+            System.out.println(" -----  ");
+            System.out.println(" Digite o id da disciplina que deseja se matricular");
             entrada = input.readLine();
-            if(!entrada.equals("salvar")){
-                idsDesejados.add(Integer.parseInt(entrada));
-            }
-                      
-        }while (entrada.equals("salvar"));
+            idsDesejados.add(Integer.parseInt(entrada));
+            System.out.println("digite o Turno Desejado: ");
+            entrada = input.readLine();
+            turnosDesejados.add(entrada);
+
+            System.out.println("Deseja Continuar as escolhas? (S|N) ");
+            entrada = input.readLine();
+
+            System.out.println("  -----  ");
+        }while (entrada.equals("n") || entrada.equals("N")  );
        
-        LinkedList<Disciplina> disciplinasSelecionadas = new LinkedList<Disciplina>();
+        LinkedList<MatriculaRequestDisciplinas> disciplinasSelecionadas = new LinkedList<MatriculaRequestDisciplinas>();
 
 
         /*disciplinasSelecionadas = (LinkedList<Disciplina>) disciplinasDisponiveis
@@ -57,22 +68,23 @@ public class GerenciamentoPrincipal {
                 .filter(f -> idsDesejados.contains(f.getId()))
                 .collect(Collectors.toList());*/
 
-        for (Disciplina disciplinaAtual:
-                disciplinasDisponiveis) {
+        for(int i=0; i<disciplinasPendentes.size()-1; i++){
 
-            if(idsDesejados.contains(disciplinaAtual.getId())){
-                disciplinasSelecionadas.add(disciplinaAtual);
+            if(idsDesejados.contains(disciplinasPendentes.get(i).getId())){
+
+                MatriculaRequestDisciplinas  disciplinaDesejada = new MatriculaRequestDisciplinas(disciplinasPendentes.get(i).clone(),turnosDesejados.get(i));
+                disciplinasSelecionadas.add(disciplinaDesejada);
 
             }
         }
 
-        LinkedList<Disciplina> resultado = (LinkedList<Disciplina>) alunoController.matricularEmDisciplinas (disciplinasSelecionadas,idAluno);
+        LinkedList<Turma> resultado = (LinkedList<Turma>) alunoController.matricularEmDisciplinas (disciplinasSelecionadas,idAluno);
 
         if(resultado!=null){
             System.out.println("Matriculado com Sucesso");
-            for (Disciplina disciplinaAtual:
+            for (Turma turmaAtual:
                     resultado) {
-                System.out.println("Disciplna: "+disciplinaAtual.getNome()+" Código: "+disciplinaAtual.getId());
+                System.out.println("Disciplna: "+turmaAtual.getDisciplina().getNome()+" Código: "+turmaAtual.getId()+" Turno: "+turmaAtual.getHorario());
 
             }
 

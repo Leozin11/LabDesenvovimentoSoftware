@@ -3,6 +3,8 @@ package main.service;
 import main.model.Aluno;
 import main.model.Disciplina;
 import main.model.Requests.MatriculaRequestAlunos;
+import main.model.Requests.MatriculaRequestDisciplinas;
+import main.model.Turma;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public interface AlunoService {
 
     Aluno deletarAluno(Long id) throws Exception;
 
-    List<Disciplina> matricularEmDisciplinas(List<Disciplina> disciplinasDesejadas, Long idAluno);
+    List<Turma> matricularEmDisciplinas(List<MatriculaRequestDisciplinas> disciplinasDesejadas, Long idAluno) throws Exception;
 
     Aluno findAlunoById(Long idAluno) throws Exception;
 }

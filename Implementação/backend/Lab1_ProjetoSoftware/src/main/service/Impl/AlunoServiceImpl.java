@@ -4,6 +4,7 @@ import main.model.Aluno;
 import main.model.Curriculo;
 import main.model.Disciplina;
 import main.model.Requests.MatriculaRequestAlunos;
+import main.model.Requests.MatriculaRequestDisciplinas;
 import main.model.Turma;
 import main.repository.Persistencia;
 import main.repository.SalvarNoArquivo;
@@ -94,18 +95,20 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public List<Disciplina> matricularEmDisciplinas(List<Disciplina> disciplinasDesejadas, Long idAluno) {
+    public List<Turma> matricularEmDisciplinas(List<MatriculaRequestDisciplinas> disciplinasDesejadas, Long idAluno) throws Exception {
 
         int somatorioPeso = 0 ;
         int somatorioDisciplinasObrigatorias =0;
         int somatorioDisciplinasOptativas=0;
+        LinkedList<Turma> disciplinasMatriculadas = new LinkedList<Turma>();
+        Aluno aluno = findAlunoById(idAluno);
 
 
         //verifica se a lista é vlida de acordo com as regras
-        for (Disciplina disciplinaAtual: disciplinasDesejadas) {
+        for (MatriculaRequestDisciplinas disciplinaAtual: disciplinasDesejadas) {
 
-            somatorioPeso+=disciplinaAtual.getPeso();
-            if(disciplinaAtual.isObrigatoria()){
+            somatorioPeso+=disciplinaAtual.getDisciplina().getPeso();
+            if(disciplinaAtual.getDisciplina().isObrigatoria()){
                 somatorioDisciplinasObrigatorias++;
             }else{
                 somatorioDisciplinasOptativas++;
@@ -118,13 +121,16 @@ public class AlunoServiceImpl implements AlunoService {
 
         if (somatorioDisciplinasObrigatorias>=4 && somatorioDisciplinasOptativas >=2 && somatorioPeso > 3){
 
-            for (Disciplina disciplinaAtual: disciplinasDesejadas) {
+            for (MatriculaRequestDisciplinas disciplinaAtual: disciplinasDesejadas) {
 
-                Turma turma = turmaService.getTurma(disciplinaAtual.getId(), disciplinaAtual.getNumero());
-                turmaService.matricularAluno(idAluno,turma);
+                Turma disciplinaMatriculada = turmaService.matricularAluno(idAluno, disciplinaAtual.getDisciplina(), disciplinaAtual.getTurno() );
+                if(disciplinaMatriculada!=null) {
+
+                    disciplinasMatriculadas.add(disciplinaMatriculada.clone());
+                }
 
             }
-            return disciplinasDesejadas;
+            return disciplinasMatriculadas;
 
         }
         return null;

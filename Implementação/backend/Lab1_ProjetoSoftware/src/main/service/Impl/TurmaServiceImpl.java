@@ -1,6 +1,7 @@
 package main.service.Impl;
 
 import main.model.*;
+import main.model.Requests.DisciplinaRequest;
 import main.model.Requests.TurmaRequest;
 import main.repository.Persistencia;
 import main.repository.SalvarNoArquivo;
@@ -116,7 +117,18 @@ public class TurmaServiceImpl implements TurmaService {
 
 
     @Override
-    public Turma getTurma(Long idDisciplina, String numeroDisciplina) {
+    public Turma getTurma(Long idDisciplina, String numeroDisciplina) throws Exception {
+        String path = systemPathTurmas+"\\"+"Turmas.txt";
+        LinkedList<Turma> turmas = (LinkedList<Turma>) persistir.deserializar(path);
+
+        for (Turma turmaAtual:
+                turmas) {
+
+            if(turmaAtual.getDisciplina().getId() == idDisciplina){
+                return turmaAtual.clone();
+            }
+
+        }
         return null;
 
     }
@@ -124,8 +136,11 @@ public class TurmaServiceImpl implements TurmaService {
         return null;
     }
     @Override
-    public boolean matricularAluno(Long id, Turma turma) {
-        return false;
+    public Turma matricularAluno(Long idAluno, Disciplina disciplinaDesejada, String turno) {
+
+        //Turma turma = turmaService.getTurma(disciplinaAtual.getId(), disciplinaAtual.getNumero());
+
+        return null;
     }
 
     @Override

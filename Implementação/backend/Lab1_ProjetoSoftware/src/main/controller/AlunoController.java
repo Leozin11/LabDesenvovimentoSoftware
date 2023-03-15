@@ -2,6 +2,8 @@ package main.controller;
 
 import main.model.Aluno;
 import main.model.Disciplina;
+import main.model.Requests.MatriculaRequestDisciplinas;
+import main.model.Turma;
 import main.service.AlunoService;
 import main.service.Impl.AlunoServiceImpl;
 
@@ -33,12 +35,12 @@ public class AlunoController {
         return null;
     }
 
-    public List<Disciplina> matricularEmDisciplinas (List<Disciplina> disciplinas, Long idAluno) throws Exception{
+    public List<Turma> matricularEmDisciplinas (List<MatriculaRequestDisciplinas> disciplinas, Long idAluno) throws Exception{
 
         Aluno aluno = alunoService.findAlunoById(idAluno);
 
         if ( aluno != null) {
-            List<Disciplina> matricula = alunoService.matricularEmDisciplinas(disciplinas, idAluno);
+            List<Turma> matricula = alunoService.matricularEmDisciplinas(disciplinas, idAluno);
             return matricula;
         }else{
             return null;
